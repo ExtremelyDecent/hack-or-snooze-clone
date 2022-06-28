@@ -24,13 +24,12 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
     const firstSlash = this.url.indexOf('/') + 2;
     //console.log(firstSlash)
     const thirdSlash = this.url.indexOf('/',firstSlash);
     //console.log(thirdSlash)
-    console.log(this.url)
-    console.log(this.url.slice(firstSlash, thirdSlash))
+    // console.log(this.url)
+    // console.log(this.url.slice(firstSlash, thirdSlash))
     if(thirdSlash === -1){
       return this.url.slice(firstSlash);
     }
