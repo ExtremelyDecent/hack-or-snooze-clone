@@ -25,7 +25,19 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    const firstSlash = this.url.indexOf('/') + 2;
+    //console.log(firstSlash)
+    const thirdSlash = this.url.indexOf('/',firstSlash);
+    //console.log(thirdSlash)
+    console.log(this.url)
+    console.log(this.url.slice(firstSlash, thirdSlash))
+    if(thirdSlash === -1){
+      return this.url.slice(firstSlash);
+    }
+    else{
+      return this.url.slice(firstSlash, thirdSlash);
+    }
+    
   }
 }
 
