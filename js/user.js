@@ -93,6 +93,7 @@ function saveUserCredentialsInLocalStorage() {
   if (currentUser) {
     localStorage.setItem("token", currentUser.loginToken);
     localStorage.setItem("username", currentUser.username);
+    localStorage.setItem("favorites", currentUser.favorites);
   }
 }
 
@@ -114,3 +115,21 @@ function updateUIOnUserLogin() {
 
   updateNavOnLogin();
 }
+
+//When the user clicks the favorite star toggles the checked star
+function starClick(evt){
+  console.debug("starClick", evt);
+  const $star = $(evt.target);
+  $star.toggleClass("far fas");
+  //  console.log($star.closest('li').attr('id'));
+  const favoriteId = $star.closest('li').attr('id');
+  if (currentUser.favorites.includes(favoriteId)){
+    currentUser.favorites.pop(favoriteId);
+  }
+  else{
+    currentUser.favorites.push(favoriteId);
+  }
+  //console.log(currentUser.favorites)
+
+}
+$allStoriesList.on("click", $favoriteStar, starClick);

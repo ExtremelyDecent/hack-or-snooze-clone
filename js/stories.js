@@ -25,6 +25,10 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+        <span class = "star">
+          <i class = "far fa-star">
+          </i>
+        </span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -61,7 +65,7 @@ async function submitNewStory (evt) {
   const title = $("#story-title").val();
   const url =  $("#story-url").val();
   let newStory = await storyList.addStory(currentUser, {title:title, author:author, url: url});
-
+  getAndShowStoriesOnStart();
 }
 
 $submitStoryForm.on("submit", submitNewStory);
