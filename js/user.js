@@ -115,28 +115,4 @@ function updateUIOnUserLogin() {
   updateNavOnLogin();
 }
 
-//When the user clicks the favorite star toggles the checked star
-function starClick(evt){
-  console.debug("starClick", evt);
-  const $star = $(evt.target);
-  $star.toggleClass("far fas");
-  //  console.log($star.closest('li').attr('id'));
-  const favoriteId = $star.closest('li').attr('id');
 
-  for (let story of storyList.stories) {
-    if(story.storyId === favoriteId){
-      if(currentUser.favorites.includes(story)){
-        currentUser.favorites.pop(story);
-      }
-      else{
-        currentUser.favorites.push(story);
-      }
-      
-    }
-    
-  }
-  
-  //console.log(currentUser.favorites)
-
-}
-$allStoriesList.on("click", $favoriteStar, starClick);

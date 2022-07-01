@@ -16,7 +16,7 @@ const $navUserProfile = $("#nav-user-profile");
 const $navSubmitStory = $('#nav-submit-story');
 
 const $favoriteStar = $("#star");
-const $favoritesContainer = $('#favorites');
+const $favoritesList = $('#favorite-stories-list');
 const $navFavorites = $('#nav-favorites');
 
 const $navLogOut = $("#nav-logout");
@@ -32,7 +32,7 @@ function hidePageComponents() {
     $loginForm,
     $signupForm,
     $submitStoryForm,
-    $favoritesContainer
+    $favoritesList
   ];
   components.forEach(c => c.hide());
 }

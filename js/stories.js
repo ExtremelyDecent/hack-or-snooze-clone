@@ -65,7 +65,7 @@ function putStoriesOnPage() {
 function putFavoritesOnPage() {
   console.debug("putFavoritesOnPage");
 
-  $allStoriesList.empty();
+  $favoritesList.empty();
 
   // loop through all of our favorite stories and generate HTML for them
   console.log(currentUser.favorites);
@@ -73,10 +73,10 @@ function putFavoritesOnPage() {
     
     const $story = generateStoryMarkup(story);
     
-    $allStoriesList.append($story);
+    $favoritesList.append($story);
   }
-
-  $allStoriesList.show();
+  $allStoriesList.hide();
+  $favoritesList.show();
 }
 
 /** Gets user input for new story and sends story to */
@@ -88,8 +88,41 @@ async function submitNewStory (evt) {
   const author = $("#author-name").val();
   const title = $("#story-title").val();
   const url =  $("#story-url").val();
-  let newStory = await storyList.addStory(currentUser, {title:title, author:author, url: url});
+   await storyList.addStory(currentUser, {title:title, author:author, url: url});
   getAndShowStoriesOnStart();
 }
 
 $submitStoryForm.on("submit", submitNewStory);
+
+//When the user clicks the favorite star toggles the checked star
+async function starClick(evt){
+  console.debug("starClick");
+  const $star = $(evt.target).closest('i');
+  $star.toggleClass("far fas");
+  const favoriteId = $star.closest('li').attr('id');
+
+  for (let story of storyList.stories) {
+    if(story.storyId === favoriteId){
+      if(currentUser.favorites.includes(story)){
+        currentUser.favorites.pop(story);
+        //remove favorite
+        await currentUser.removeFavorite(favoriteId);
+        
+      }
+      else{
+        //add favorite
+        currentUser.favorites.push(story);
+        await currentUser.addFavorite(favoriteId);
+        
+      }
+      
+    }
+    
+  }
+  
+  //console.log(currentUser.favorites)
+
+}
+
+$allStoriesList.on("click", $favoriteStar, starClick);
+$favoritesList.on("click", $favoriteStar, starClick);

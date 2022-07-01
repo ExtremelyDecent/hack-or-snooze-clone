@@ -25,11 +25,9 @@ class Story {
 
   getHostName() {
     const firstSlash = this.url.indexOf('/') + 2;
-    //console.log(firstSlash)
+
     const thirdSlash = this.url.indexOf('/',firstSlash);
-    //console.log(thirdSlash)
-    // console.log(this.url)
-    // console.log(this.url.slice(firstSlash, thirdSlash))
+
     if(thirdSlash === -1){
       return this.url.slice(firstSlash);
     }
@@ -101,6 +99,7 @@ class StoryList {
 }
 
 
+
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
  */
@@ -130,6 +129,7 @@ class User {
     // store the login token on the user so it's easy to find for API calls.
     this.loginToken = token;
   }
+
 
   /** Register new user in API, make User instance & return it.
    *
@@ -215,4 +215,27 @@ class User {
       return null;
     }
   }
+  /** Remove favorite from the api */
+  async removeFavorite(story){
+    console.log(this)
+    const token = this.loginToken;
+    await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story}`,
+      method : "DELETE",
+      data: {token}
+    });
+    
+    
+    }
+    /** Add favorite to the api */
+    async addFavorite(story){
+    const token = this.loginToken;
+    await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story}`,
+      method : "POST",
+      data: {token}
+    });
+    
+    
+    }
 }
