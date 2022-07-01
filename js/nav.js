@@ -43,3 +43,11 @@ function addStoryClick(evt){
 $navSubmitStory.on("click", addStoryClick);
 
 
+//When the user clicks on the nave to open favorites
+function favoritesNavClick(evt)
+{
+  console.debug("navFavoritesClick", evt)
+  putFavoritesOnPage();
+}
+
+$navFavorites.on("click", favoritesNavClick);

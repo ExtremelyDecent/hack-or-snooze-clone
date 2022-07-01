@@ -93,7 +93,6 @@ function saveUserCredentialsInLocalStorage() {
   if (currentUser) {
     localStorage.setItem("token", currentUser.loginToken);
     localStorage.setItem("username", currentUser.username);
-    localStorage.setItem("favorites", currentUser.favorites);
   }
 }
 
@@ -123,12 +122,20 @@ function starClick(evt){
   $star.toggleClass("far fas");
   //  console.log($star.closest('li').attr('id'));
   const favoriteId = $star.closest('li').attr('id');
-  if (currentUser.favorites.includes(favoriteId)){
-    currentUser.favorites.pop(favoriteId);
+
+  for (let story of storyList.stories) {
+    if(story.storyId === favoriteId){
+      if(currentUser.favorites.includes(story)){
+        currentUser.favorites.pop(story);
+      }
+      else{
+        currentUser.favorites.push(story);
+      }
+      
+    }
+    
   }
-  else{
-    currentUser.favorites.push(favoriteId);
-  }
+  
   //console.log(currentUser.favorites)
 
 }
