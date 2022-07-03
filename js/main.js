@@ -18,6 +18,8 @@ const $navSubmitStory = $('#nav-submit-story');
 const $favoriteStar = $("#star");
 const $favoritesList = $('#favorite-stories-list');
 const $navFavorites = $('#nav-favorites');
+const $navMyStories = $('#nav-my-stories');
+const $userStoriesList = $('#user-stories-list');
 
 const $navLogOut = $("#nav-logout");
 

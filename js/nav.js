@@ -51,3 +51,10 @@ function favoritesNavClick(evt)
 }
 $navFavorites.on("click", favoritesNavClick);
 
+function myStoriesClick(){
+  console.debug("myStoriesClick");
+  hidePageComponents();
+  putUserStoriesOnPage()
+}
+$navMyStories.on("click", myStoriesClick);
+

@@ -94,6 +94,25 @@ async function submitNewStory (evt) {
 
 $submitStoryForm.on("submit", submitNewStory);
 
+
+/** puts only user submitted stories on page */
+function putUserStoriesOnPage() {
+  console.debug("putUserStoriesOnPage");
+
+  $userStoriesList.empty();
+
+  // loop through all of our favorite stories and generate HTML for them
+  console.log(currentUser);
+  for (let story of currentUser.ownStories) {
+    
+     const $story = generateStoryMarkup(story);
+    
+    $userStoriesList.append($story);
+  }
+  $allStoriesList.hide();
+  $userStoriesList.show();
+}
+
 //When the user clicks the favorite star toggles the checked star
 async function starClick(evt){
   console.debug("starClick");
