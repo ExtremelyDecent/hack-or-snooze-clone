@@ -51,10 +51,14 @@ function favoritesNavClick(evt)
 }
 $navFavorites.on("click", favoritesNavClick);
 
+
+//When the user clicks on my stories 
 function myStoriesClick(){
   console.debug("myStoriesClick");
   hidePageComponents();
   putUserStoriesOnPage()
 }
+
+
 $navMyStories.on("click", myStoriesClick);
 

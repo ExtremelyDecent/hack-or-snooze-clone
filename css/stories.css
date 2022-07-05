@@ -41,3 +41,7 @@
 .star{
   cursor: pointer;
 }
+
+.trash-can {
+  cursor: pointer;
+}

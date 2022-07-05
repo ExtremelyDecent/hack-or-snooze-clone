@@ -12,6 +12,22 @@ async function getAndShowStoriesOnStart() {
   putStoriesOnPage();
 }
 
+function getDeleteBtnHTML(showDeleteBtn) {
+  if (showDeleteBtn){
+    return `
+    <span class="trash-can">
+      <i class="fas fa-trash-alt"></i>
+    </span>`;
+  }
+  else{
+    return `
+    <span class="trash-can hidden">
+      <i class="fas fa-trash-alt"></i>
+    </span>`;
+  }
+
+}
+
 /**
  * A render method to render HTML for an individual Story instance
  * - story: an instance of Story
@@ -19,11 +35,11 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
+function generateStoryMarkup(story, showDeleteBtn = false) {
   // console.debug("generateStoryMarkup", story);
   let star;
   const hostName = story.getHostName();
-  if(currentUser.favorites.includes(story)){
+  if(currentUser.favorites.includes(story.storyID)){
     star = "fas fa-star";
   }
   else{
@@ -31,6 +47,7 @@ function generateStoryMarkup(story) {
   }
   return $(`
       <li id="${story.storyId}">
+      ${getDeleteBtnHTML(showDeleteBtn)}
         <span class = "star">
           <i class = "${star}">
           </i>
@@ -75,7 +92,7 @@ function putFavoritesOnPage() {
     
     $favoritesList.append($story);
   }
-  $allStoriesList.hide();
+  hidePageComponents();
   $favoritesList.show();
 }
 
@@ -88,7 +105,8 @@ async function submitNewStory (evt) {
   const author = $("#author-name").val();
   const title = $("#story-title").val();
   const url =  $("#story-url").val();
-   await storyList.addStory(currentUser, {title:title, author:author, url: url});
+  await storyList.addStory(currentUser, {title:title, author:author, url: url});
+  currentUser.ownStories.push()
   getAndShowStoriesOnStart();
 }
 
@@ -105,7 +123,7 @@ function putUserStoriesOnPage() {
   console.log(currentUser);
   for (let story of currentUser.ownStories) {
     
-     const $story = generateStoryMarkup(story);
+     const $story = generateStoryMarkup(story, true);
     
     $userStoriesList.append($story);
   }
@@ -143,5 +161,16 @@ async function starClick(evt){
 
 }
 
+
+
+//remove story
+async function trashCanClick(evt){
+  console.debug("trashCanClick");
+  const idToRemove = $(evt.target).closest('i').closest('li').attr('id');
+  await storyList.removeStory(currentUser, idToRemove);
+  putUserStoriesOnPage();
+}
+
 $allStoriesList.on("click", $favoriteStar, starClick);
 $favoritesList.on("click", $favoriteStar, starClick);
+$userStoriesList.on("click", $trashCan, trashCanClick);
